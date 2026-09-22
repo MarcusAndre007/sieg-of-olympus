@@ -658,7 +658,7 @@
             subefeitos: "[Sangramento]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos; este efeito pode ser acumulado.\n\n[Quebra de Armadura]: A unidade com este estado tem defesa -20% por 2 turnos.\n\n[Deus Demonio]: A unidade com este estado tem taxa de acerto critico +10%, dano critico +10%; não pode ser dissipada; dura até ao fim da batalha."
         },
         {
-            nome: "Medela",
+            nome: "Medeia",
             classe: "Suporte",
             elemento: "Sombra",
             nucleo: "Sim",
@@ -715,23 +715,23 @@
             subefeitos: "[Veneno]: Perde vida equivalente a [5% do limite máximo de vida] a cada turno; o máximo não excede 10 vezes o ataque; por 1 turno.\n\n[Bloqueio de Reviver]: A unidade com este estado não pode reviver por 2 turnos."
         },
         {
-            nome: "Onan",
-            classe: "Tanque",
-            elemento: "Maré",
+            nome: "Orion",
+            classe: "Guerreiro",
+            elemento: "Vendaval",
             nucleo: "Sim",
-            etiquetas: "Proteção, Proibição de Reviver",
+            etiquetas: "Precisão Estelar, Ataque à Distância",
             habilidades: [
-                { nome: "Muro Oceânico", desc: "Cria escudos defensores robustos." },
-                { nome: "Resistência Marinha", desc: "Defesa +20%, Vida +20%." },
-                { nome: "Selo das Profundezas", desc: "Imíde o inimigo abatido de ressuscitar." },
-                { nome: "Bastião", desc: "Reduz o dano físico global recebido." }
+                { nome: "Flecha Celeste", desc: "Dispara um projétil estelar de alta precisão causando dano físico severo." },
+                { nome: "Mira Constelar", desc: "Precisão +15%, Taxa CRÍT +10%." },
+                { nome: "Chuva de Meteoros", desc: "Bombardeia a área inimiga causando dano contínuo." },
+                { nome: "Olhar do Caçador", desc: "Aumenta o dano contra alvos marcados." }
             ],
             talentos: [
-                { nome: "Guarda Básica", desc: "Gera escudos para a equipa no turno inicial." },
-                { nome: "Destruição Básica", desc: "Bloqueia efeitos de ressurreição." }
+                { nome: "Precisão Básica", desc: "Aumento de precisão de ataque físico." },
+                { nome: "Fúria Básica", desc: "Taxa de acerto crítico +10%." }
             ],
-            observacoes: "Tanque robusto com foco em neutralizar ressurreições no campo de batalha.",
-            subefeitos: "[Bloqueio de Reviver]: A unidade com este estado não pode reviver por 2 turnos."
+            observacoes: "Caçador estelar focado em ataques precisos e dano explosivo à distância.",
+            subefeitos: "[Marca do Caçador]: A unidade com este estado tem a esquiva reduzida em 10% por 2 turnos."
         },
         {
             nome: "Ceneu",
@@ -753,25 +753,6 @@
             subefeitos: "[Reforço de VEL]: A unidade com este estado tem a velocidade +2%, até 5 camadas; dura até o fim da batalha e não pode ser dissipado.\n\n[Atordoamento]: A unidade com este estado não pode agir por 1 turno."
         },
         {
-            nome: "Perseu",
-            classe: "Guerreiro",
-            elemento: "Radiância",
-            nucleo: "Sim",
-            etiquetas: "Impacto Físico, Atordoamento",
-            habilidades: [
-                { nome: "Golpe de Escudo", desc: "Ataca o alvo com chance de atordoamento." },
-                { nome: "Heroísmo", desc: "Ataque Físico +20%, CRÍT +10%." },
-                { nome: "Espada da Medusa", desc: "Dano físico pesado com efeito de controlo." },
-                { nome: "Olhar Valente", desc: "Resistência a atordoamentos e abates." }
-            ],
-            talentos: [
-                { nome: "Impacto Básico", desc: "Chance de atordoar alvos ao causar alto dano." },
-                { nome: "Bravura B", desc: "Aumento de dano físico inicial." }
-            ],
-            observacoes: "Guerreiro com forte capacidade de atordoamento e controle físico.",
-            subefeitos: "[Atordoamento]: A unidade com este estado não pode agir por 2 turnos."
-        },
-        {
             nome: "Anfitrião",
             classe: "Tanque",
             elemento: "Chama",
@@ -791,7 +772,26 @@
             subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado).\n\n[Queimadura Ardente]: A unidade com este estado perde vida equivalente a [Limite máximo de vida do conjurador x 7%] por turno; dura 1 turno."
         },
         {
-            nome: "Hiperion",
+            nome: "Perseu",
+            classe: "Guerreiro",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Impacto Físico, Atordoamento",
+            habilidades: [
+                { nome: "Golpe de Escudo", desc: "Ataca o alvo com chance de atordoamento." },
+                { nome: "Heroísmo", desc: "Ataque Físico +20%, CRÍT +10%." },
+                { nome: "Espada da Medusa", desc: "Dano físico pesado com efeito de controlo." },
+                { nome: "Olhar Valente", desc: "Resistência a atordoamentos e abates." }
+            ],
+            talentos: [
+                { nome: "Impacto Básico", desc: "Chance de atordoar alvos ao causar alto dano." },
+                { nome: "Bravura B", desc: "Aumento de dano físico inicial." }
+            ],
+            observacoes: "Guerreiro com forte capacidade de atordoamento e controle físico.",
+            subefeitos: "[Atordoamento]: A unidade com este estado não pode agir por 2 turnos."
+        },
+        {
+            nome: "Hipérion",
             classe: "Mago",
             elemento: "Chama",
             nucleo: "Sim",
@@ -848,7 +848,26 @@
             subefeitos: "[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos.\n\n[Espírito Sagrado]: A unidade com este estado aparece no campo de batalha em forma de alma; no próximo turno, tem 25% de chance de reviver; a cada turno, a chance aumenta em 5%; após 5 turnos da morte, revive com certeza, recuperando 40% da vida."
         },
         {
-            nome: "Ilitia",
+            nome: "Clóris",
+            classe: "Suporte",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Cura da Primavera, Revive Natural",
+            habilidades: [
+                { nome: "Bênção Floral", desc: "Cura aliados e espalha essência da primavera." },
+                { nome: "Graça da Natureza", desc: "Vida +20%, Cura +10%." },
+                { nome: "Ressurreição Verde", desc: "Revive um aliado abatido com vida básica." },
+                { nome: "Aura Refrescante", desc: "Reduz o dano contínuo recebido pela equipa." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "Aumento de eficácia de cura." },
+                { nome: "Purificação Básica", desc: "Chance de limpar debuffs próprios." }
+            ],
+            observacoes: "Suporte focado em regeneração natural e suporte de vida à equipa.",
+            subefeitos: "[Regeneração da Primavera]: Restaura 10% da vida máxima por turno durante 2 turnos."
+        },
+        {
+            nome: "Ilítia",
             classe: "Mago",
             elemento: "Radiância",
             nucleo: "Sim",
@@ -867,7 +886,7 @@
             subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos."
         },
         {
-            nome: "Sarpedon",
+            nome: "Saroédon",
             classe: "Guerreiro",
             elemento: "Chama",
             nucleo: "Sim",
@@ -1059,7 +1078,7 @@
         document.getElementById("obsHeroi").textContent = heroi.observacoes;
         document.getElementById("subefeitosHeroi").textContent = heroi.subefeitos;
 
-        // Automatização da imagem do herói pelo nome
+        // Automatização da imagem do herói direcionada para a pasta "imagens/"
         const imgEl = document.getElementById("imagemHeroi");
         if (heroi.nome) {
             const nomeArquivo = heroi.nome
@@ -1068,7 +1087,7 @@
                 .replace(/[\u0300-\u036f]/g, "") // Remove acentos
                 .replace(/\s+/g, "");            // Remove espaços
 
-            imgEl.src = `${nomeArquivo}.png`;
+            imgEl.src = `imagens/${nomeArquivo}.png`;
             imgEl.style.display = "block";
         } else {
             imgEl.style.display = "none";
