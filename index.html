@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê Estratégico de Heróis Definitivo</title>
+    <style>
+        :root {
+            --primary-color: #1a252f;
+            --accent-color: #2980b9;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+
+        .search-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 16px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+        }
+
+        .suggestions-list {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #bdc3c7;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f1f4f6;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .hero-dossier {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            padding: 30px;
+            display: none;
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f4f6;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .hero-info-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-avatar {
+            width: auto;          /* Adapta-se à proporção real de largura */
+            height: auto;         /* Adapta-se à proporção real de altura */
+            max-height: 100px;    /* Altura máxima para preservar o layout */
+            max-width: 150px;     /* Largura máxima de segurança */
+            object-fit: contain;  /* Mantém a imagem inteira sem cortes */
+            border-radius: 6px;
+            border: 1px solid #dcdde1;
+            display: none;
+            background: #eee;
+        }
+
+        .hero-title-area h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 28px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .badge {
+            background: #eef2f5;
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge.element {
+            background: #e8f8f5;
+            color: #16a085;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 18px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            margin: 25px 0 15px 0;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-card {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .skill-name {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .skill-desc {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .talents-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .talent-card {
+            background: #eef2f5;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .talent-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .talent-desc {
+            font-size: 12px;
+            color: #555;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .placeholder-msg {
+            text-align: center;
+            color: #95a5a6;
+            padding: 40px;
+            font-size: 16px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dossiê Estratégico</h1>
+    <p class="subtitle">Pesquise por um herói para visualizar todas as suas informações na mesma página</p>
+
+    <div class="search-section">
+        <input type="text" id="inputBusca" class="search-box" placeholder="Digite o nome do herói (ex: Tétis, Helena, Zeus)..." oninput="buscarHerois()">
+        <div id="listaSugestoes" class="suggestions-list"></div>
+    </div>
+
+    <div id="msgInicial" class="placeholder-msg">
+        Nenhum herói selecionado. Utilize a barra acima para pesquisar.
+    </div>
+
+    <div id="dossieHeroi" class="hero-dossier">
+        <div class="hero-header">
+            <div class="hero-info-wrapper">
+                <img id="imagemHeroi" class="hero-avatar" src="" alt="Imagem do Herói">
+                <div class="hero-title-area">
+                    <h2 id="nomeHeroi">Nome do Herói</h2>
+                    <div class="hero-badges">
+                        <span id="classeHeroi" class="badge">Classe</span>
+                        <span id="elementoHeroi" class="badge element">Elemento</span>
+                        <span id="nucleoHeroi" class="badge">Núcleo: Sim</span>
+                    </div>
+                </div>
+            </div>
+            <div id="etiquetasHeroi" style="font-size: 13px; color: #7f8c8d;">
+                <strong>Etiquetas:</strong> <span>-</span>
+            </div>
+        </div>
+
+        <div class="section-title">Habilidades do Herói</div>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-name" id="hab1Nome">Habilidade 1</div>
+                <p class="skill-desc" id="hab1Desc">Descrição da habilidade 1...</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-name" id="hab2Nome">Habilidade 2</div>
+                <p class="skill-desc" id="hab2Desc">Descrição da habilidade 2...</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-name" id="hab3Nome">Habilidade 3</div>
+                <p class="skill-desc" id="hab3Desc">Descrição da habilidade 3...</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-name" id="hab4Nome">Habilidade 4</div>
+                <p class="skill-desc" id="hab4Desc">Descrição da habilidade 4...</p>
+            </div>
+        </div>
+
+        <div class="section-title">Talentos</div>
+        <div class="talents-container">
+            <div class="talent-card">
+                <div class="talent-name" id="talento1Nome">Talento 1</div>
+                <p class="talent-desc" id="talento1Desc">Descrição do talento 1...</p>
+            </div>
+            <div class="talent-card">
+                <div class="talent-name" id="talento2Nome">Talento 2</div>
+                <p class="talent-desc" id="talento2Desc">Descrição do talento 2...</p>
+            </div>
+        </div>
+
+        <div class="section-title">Observações Estratégicas</div>
+        <p id="obsHeroi" class="info-box">Nenhuma observação cadastrada.</p>
+
+        <div class="section-title">Subefeitos</div>
+        <p id="subefeitosHeroi" class="info-box">Nenhum subefeito cadastrado.</p>
+    </div>
+
+</div>
+
+<script>
+    const baseDadosHerois = [
+        {
+            nome: "Helena",
+            classe: "Suporte",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Aum Atq, Dissipação, Comp. Dano",
+            habilidades: [
+                { nome: "Aurora do Reino", desc: "Causa 74% de dano mágico a 3 unidades inimigas aleatórias, rouba 1 camada de buff do alvo e a adiciona a si mesmo; ao mesmo tempo, aumenta o ataque das 4 unidades aliadas com maior ataque em 10% e a taxa de acerto crítico em 3% + número de heróis aliados da Luz * 3% por 2 turnos." },
+                { nome: "Vontade Flamejante", desc: "Ataque +20%, Vida +10%" },
+                { nome: "Escudo Sagrado", desc: "Aumenta a redução de dano mágico de todos os aliados em 10%, e adiciona o efeito [Escudo Sagrado] a todas as unidades aliadas; o ataque de todas as unidades aliadas +10% por 2 turnos; os efeitos não podem ser dissipados." },
+                { nome: "Brasa Eterna", desc: "Quando Helena morre, recupera vida equivalente a 160% do ataque de Helena para todas as unidades aliadas; pode ser acionado no máximo 1 vez por batalha." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "A cura e a cura recebida do herói +5%." },
+                { nome: "Clareza Básica", desc: "Ao usar uma habilidade ativa de cura/ressurreição, tem 20% de chance de limpar todos os estados negativos de um aliado aleatório." }
+            ],
+            observacoes: "Focada em cura em grupo, escudos sagrados e recuperação passiva ao morrer. Excelente sinergia com composições defensivas.",
+            subefeitos: "[Mundo Encantado]: A unidade com este estado compartilha igualmente o dano com todos os aliados (só compartilha dano de ataques inimigos; dano de buffs negativos como Queimadura e dano de reflexão não são compartilhados) por 2 turnos; este efeito não pode ser dissipado; o dano compartilhado ignora escudos e escudos de bloqueio.\n\n[Reforço de Imunidade a Dano Mágico]: A unidade com este estado tem redução de dano mágico +10% por 2 turnos; este efeito não pode ser dissipado."
+        },
+        {
+            nome: "Sirena",
+            classe: "Suporte",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "CuraGrup, Ress, Cont Atq",
+            habilidades: [
+                { nome: "Expurgo de Alma", desc: "Aumenta a defesa das 3 unidades aliadas com maior ataque em 10% por 2 turnos, e aplica [Vestido Florido] à 1 unidade com maior ataque por 2 turnos." },
+                { nome: "Ária Pura", desc: "Vida +15%, Ataque +10%." },
+                { nome: "Canção da Sirena", desc: "Causa 94% de dano mágico a todas as unidades inimigas, com 45% de chance de infligir [Marca do Estigma] por 2 turnos." },
+                { nome: "Águas Celestes", desc: "O ataque básico tem 100% de chance de infligir [Marca de Pétala] a uma unidade inimiga por 2 turnos; e quando a unidade inimiga age ativamente durante o turno, se a própria velocidade superior à dessa unidade, tem 60% de chance de a atacar com 1 ataque básico." }
+            ],
+            talentos: [
+                { nome: "Expurgo de Alma Básica", desc: "Ao usar uma habilidade de dano mágico, cura a si mesmo com 10% do dano causado." },
+                { nome: "Foco B", desc: "No início da batalha, o dano mágico +10% por 2 turnos; este efeito não pode ser dissipado." }
+            ],
+            observacoes: "Combina dano em área, curas e controle com forte sustain próprio.",
+            subefeitos: "[Reforço de ATQ]: A unidade com este estado tem o ataque +20% por 2 turnos.\n\n[Reforço de DEF]: A unidade com este estado tem defesa +10% por 2 turnos.\n\n[Toga Florada]: As unidades aliadas protegidas, quando a vida está abaixo de 40%, restauram 40% da própria vida; se a unidade morrer, revive com 25% da vida; após um dos dois efeitos ser acionado, o efeito é anulado; dura 2 turnos e não pode ser dissipado.\n\n[Marca do Pistilo]: A unidade com marca tem redução de dano -6%, resistência a controle -4%, e ao sofrer ataques sofre dano extra equivalente a 7% do ataque do conjurador; a marca dura 2 turnos e pode acumular até 3 camadas."
+        },
+        {
+            nome: "Medusa",
+            classe: "Suporte",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Esc, Red Atq, Cura",
+            habilidades: [
+                { nome: "Cântico da Alma", desc: "Causa 125% de dano mágico a todas as unidades inimigas da retaguarda, e adiciona um [Escudo] às 3 unidades aliadas com menos vida equivalente a 50% do dano total por 2 turnos." },
+                { nome: "Górgona", desc: "Vida +20%, Ataque +10%, Velocidade +5." },
+                { nome: "Marionete Sombria", desc: "Se liberar o poder da morte, causa 100% de dano a todas as unidades inimigas e inflige aleatoriamente 1 estado negativo entre [Redução de Cura 30%], [Redução de Precisão 20%], [Redução de Ataque 30%], [Veneno] por 2 turnos; se liberar a bênção, restaura 10% da vida máxima de todos os aliados e aumenta o ataque em 10% por 2 turnos." },
+                { nome: "Salvação Sombria", desc: "No início da batalha, reduz o ataque de todas as unidades inimigas em 10% (não dissipável) por 2 turnos." }
+            ],
+            talentos: [
+                { nome: "Pesadelo Básico", desc: "Ao atacar, tem 20% de chance de reduzir a cura e a cura recebida do alvo em 10% por 3 turnos." },
+                { nome: "Imunidade a Dano Básico", desc: "No início da batalha, a redução de dano +10% nos primeiros 2 turnos." }
+            ],
+            observacoes: "Atua com debuffs e escudos na retaguarda; precisa de mitigação inicial contra danos pesados.",
+            subefeitos: "[Escudo]: Este escudo pode absorver dano equivalente a 50% do número de dano da habilidade atual do conjurador por 2 turnos.\n\n[Veneno]: Perde vida equivalente a [5% do limite máximo de vida] a cada turno; o máximo não excede 10 vezes o ataque; por 1 turno.\n\n[Redução de ATQ]: A unidade com este estado tem ataque -30% por 2 turnos.\n\n[Redução de Precisão]: Precisão -20%.\n\n[Redução de Cura]: A unidade com este estado tem a cura e a cura recebida -30% por 2 turnos."
+        },
+        {
+            nome: "Tétis",
+            classe: "Mago",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Dano em Área, Congel., Esc",
+            imagem: "image_96e7c2.png",
+            habilidades: [
+                { nome: "Mundo de Neve", desc: "Causa 98% de dano mágico a todas as unidades inimigas; contra alvos com vida superior a 60%, o dano +20%; ao mesmo tempo, tem 40% de chance de reduzir a taxa de acerto crítico do alvo em 10% por 2 turnos." },
+                { nome: "Sabedoria Mágica", desc: "Ataque +20%, Vida +10%, Velocidade +5." },
+                { nome: "Nevasca Ártica", desc: "Ataca as 2 unidades à frente, causando 157% de dano mágico a cada unidade, com 35% de chance de infligir o efeito [Congelamento] ao alvo por 2 turnos; ao mesmo tempo, gera um [Escudo] para si mesmo por 2 turnos, com valor equivalente a 10% do dano causado por esta habilidade." },
+                { nome: "Frio Absoluto", desc: "No início do turno, se a própria vida não for inferior a 30%, ganha +10% de taxa de acerto crítico por 1 turno; se for inferior a 30%, ganha +10% de ataque por 1 turno." }
+            ],
+            talentos: [
+                { nome: "Foco B", desc: "No início da batalha, o dano mágico +10% por 2 turnos; este efeito não pode ser dissipado." },
+                { nome: "Oscilação Básica", desc: "Ao causar dano mágico, o resultado final do dano flutua aleatoriamente entre 90-110%." }
+            ],
+            observacoes: "Maga de dano em área e congelamento; beneficia-se de bônus mágico precoce e flutuação de dano.",
+            subefeitos: "[Congelamento]: A unidade com este estado não pode agir por 2 turnos; após sofrer 3 ataques, o estado é removido (exceto ataques de espíritos).\n\n[Escudo]: Este escudo pode absorver dano equivalente a 10% do número de dano da última habilidade do conjurador por 2 turnos.\n\n[Reforço de Taxa CRIT]: A unidade com este estado tem a taxa de acerto critico +10% por 1 turno.\n\n[Reforço de ATQ]: A unidade com este estado tem ataque +10% por 1 turno."
+        },
+        {
+            nome: "Poseidon",
+            classe: "Mago",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Elet, Paral., Combo",
+            habilidades: [
+                { nome: "Alabarda da Ruína", desc: "Causa 92% de dano mágico a todas as unidades inimigas, com 35% de chance de infligir o estado [Eletrificado] por 3 turnos." },
+                { nome: "Deus do Mar", desc: "Ataque +20%, Vida +10%, Taxa de acerto crítico +5%; ao atacar inimigos [Eletrificados], causa +10% de dano, e o dano crítico +5%; ao atacar Tanques, causa +10% de dano adicional." },
+                { nome: "Impacto das Ondas", desc: "Causa 350% de dano mágico a 4 alvos inimigos aleatórios (o dano é compartilhado por todos os alvos na área; o dano a um único alvo não excede 300% do ataque de Poseidon); contra alvos em estado [Eletrificado], tem 30% de chance de infligir [Paralisia]." },
+                { nome: "Erosão das Ondas", desc: "Ao atacar com magia, tem 10% de chance de acionar um ataque combinado com dano equivalente a 60% do normal." }
+            ],
+            talentos: [
+                { nome: "Combo de Mágico Físico", desc: "O ataque mágico tem 20% de chance de acionar um ataque combinado, liberando a habilidade novamente com dano reduzido a 50%." },
+                { nome: "Poder de Magia Básica", desc: "Dano mágico +5%; Ataque +60 pontos extras." }
+            ],
+            observacoes: "Focado em dano elétrico e paralisias; potencia reativações e poder mágico.",
+            subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos.\n\n[Paralisia]: A unidade com este estado não pode agir por 2 turnos."
+        },
+        {
+            nome: "Rode",
+            classe: "Suporte",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Sono, Aum Atq, Cura",
+            habilidades: [
+                { nome: "Urna de Artefato", desc: "Ataca 3 inimigos aleatórios causando 77% de dano mágico, com 5% de chance de fazê-los cair em sono; ao mesmo tempo, concede 1 uso de [Escudo de Bloqueio] ao aliado com a menor proporção de vida, e aumenta o ataque de todas as unidades aliadas em 20% por 2 turnos." },
+                { nome: "Filha do Mar", desc: "Vida +20%, Ataque +10%, Cura +5%." },
+                { nome: "Hino do Oceano", desc: "Restaura vida equivalente a 92% do ataque de Rode a todas as unidades aliadas; o excesso de cura converte-se em igual quantidade de [Escudo Curativo] por 2 turnos." },
+                { nome: "Coração da Misericórdia", desc: "No início de cada turno, cura a 1 unidade aliada com menos vida com vida equivalente a 79% do ataque de Rode, e tem 50% de chance de aumentar a redução de dano dessa unidade em 5% por 1 turno." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "A cura e a cura recebida do herói +5%." },
+                { nome: "Purificação Básica", desc: "No início do turno, tem 30% de chance de limpar todos os seus estados negativos." }
+            ],
+            observacoes: "Especializada em cura contínua e escudos curativos.",
+            subefeitos: "[Sono]: A unidade com este estado não pode agir por 2 turnos; ao sofrer 1 ataque, tem 50% de chance de ter o estado removido; ao sofrer 2 ataques, acorda com certeza (exceto ataques de espírito).\n\n[Escudo de Bloqueio]: A unidade com este estado é imune a 1 golpe de dano (não afeta dano contínuo de buff, dano compartilhado do mundo do charme nem dano de espírito), por 2 turnos; este efeito não pode ser acumulado.\n\n[Recuperação Continua]: A unidade com este estado restaura vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos; este efeito pode ser acumulado.\n\n[Escudo de Cura]: Escudo Curativo, com absorção equivalente ao excesso de cura da habilidade de cura atual do conjurador, por 2 turnos.\n\n[Reforço de ATQ]: A unidade com este estado tem ataque +20% por 2 turnos."
+        },
+        {
+            nome: "Hélios",
+            classe: "Mago",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Prot Cham, Dano em Área, Queim.",
+            habilidades: [
+                { nome: "Impacto de Mancha Solar", desc: "Causa 88% de dano a todas as unidades inimigas; este dano ignora 10% da defesa do alvo." },
+                { nome: "Poder do Sol", desc: "Aumenta o Ataque em 20%, a Vida em 10% e a Taxa de Crítico em 5%; além disso, todos os ataques de Hélios contra alvos em estado de [Combustão] ganham temporariamente 3% de Taxa de Crítico e 6% de Dano Crítico." },
+                { nome: "Luz Eterna", desc: "No início da batalha, ganha um [Proteção Carmesim]: dano mágico próprio +5%, defesa +6%. O efeito de proteção dura até o fim da batalha e não pode ser dissipado." },
+                { nome: "Tocha Solar", desc: "Aumenta o dano de queimadura infligido em 15%." }
+            ],
+            talentos: [
+                { nome: "Foco B", desc: "No início da batalha, o dano mágico +10% por 2 turnos; este efeito não pode ser dissipado." },
+                { nome: "Murchar Básico", desc: "Dano causado a alvos com Vitalidade/Autocura +15%." }
+            ],
+            observacoes: "Focado em queimação e dano que ignora defesa.",
+            subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado)."
+        },
+        {
+            nome: "Odisseu",
+            classe: "Mago",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Queim., Dano em Área, Aum Dano",
+            habilidades: [
+                { nome: "Corte da Justiça", desc: "Causa dano de fogo em área e inflige [Queimadura]." },
+                { nome: "Combate Valente", desc: "Vida +20%, Ataque +10%." },
+                { nome: "Julgamento da Lâmpada", desc: "Ataque focado no alvo com maior HP." },
+                { nome: "Ataque ao Ponto Fraco", desc: "Penetração elemental contra alvos em chamas." }
+            ],
+            talentos: [
+                { nome: "Poder de Magia Básica", desc: "Dano mágico +5%; Ataque +60 pontos extras." },
+                { nome: "Penetração Básica", desc: "O resultado do dano ignora 10% da defesa do alvo." }
+            ],
+            observacoes: "Aniquila tanques com dano baseado no HP máximo.",
+            subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado).\n\n[Queimadura Ardente]: A unidade com este estado perde vida equivalente a [Limite máximo de vida do conjurador x 7%] por turno; dura 1 turno."
+        },
+        {
+            nome: "Apolo",
+            classe: "Guerreiro",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Abates em Cadeia, Dano Físico",
+            habilidades: [
+                { nome: "Golpe Solar", desc: "Causa dano físico direto ao alvo da frente." },
+                { nome: "Fúria Solar", desc: "Ataque +20%, Taxa CRÍT +10%." },
+                { nome: "Chama Divina", desc: "Ataque em cadeia ao eliminar um alvo." },
+                { nome: "Calor Extremo", desc: "Aumenta o dano crítico contra unidades afetadas por queimadura." }
+            ],
+            talentos: [
+                { nome: "Perseguição Básico", desc: "Ao eliminar um alvo com ataque físico, tem 60% de chance de realizar mais 1 ataque básico." },
+                { nome: "Fúria Básica", desc: "Taxa de acerto crítico +10%." }
+            ],
+            observacoes: "Focado em abates múltiplos em cadeia através de dano físico e chamas.",
+            subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado)."
+        },
+        {
+            nome: "Afrodite",
+            classe: "Suporte",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Reflexão, Cura Crítica",
+            habilidades: [
+                { nome: "Beleza Oculta", desc: "Cura aliados e aplica bônus de defesa." },
+                { nome: "Graça Divina", desc: "Vida +20%, Defesa +10%." },
+                { nome: "Espelho de Vénus", desc: "Reflete parte do dano recebido." },
+                { nome: "Amor Eterno", desc: "Aumenta a eficácia das curas críticas em 15%." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "A cura e a cura recebida do herói +5%." },
+                { nome: "Espinhos Básico", desc: "Ao sofrer dano, tem 25% de chance de refletir 30% do dano." }
+            ],
+            observacoes: "Suporte defensivo focado em reflexão de dano e cura otimizada.",
+            subefeitos: "[Vestimenta de Penas da Fénix]: A unidade com este estado, ao ser atacada, faz com que o atacante sofra 10% do dano deste ataque; o escudo dura 2 turnos e não pode ser dissipado."
+        },
+        {
+            nome: "Nêmesis",
+            classe: "Mago",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "Dano em Área, Velocidade",
+            habilidades: [
+                { nome: "Lâmina de Vento", desc: "Causa dano em área cortante." },
+                { nome: "Celeridade", desc: "Velocidade +15, Ataque +10%." },
+                { nome: "Fúria dos Ventos", desc: "Ataque acentuado contra alvos restantes." },
+                { nome: "Sopro Ágil", desc: "Aumenta a esquiva base em 5%." }
+            ],
+            talentos: [
+                { nome: "Vendaval Básico", desc: "Velocidade extra +3% +10 pontos." },
+                { nome: "Foco B", desc: "No início da batalha, o dano mágico +10% por 2 turnos." }
+            ],
+            observacoes: "Alta mobilidade e controle de velocidade em combates dinâmicos.",
+            subefeitos: "[Sopro do Vento]: A unidade com este estado, ao sofrer um ataque, reduz e reflete 30% do dano do ataque (esta habilidade só pode reduzir dano de ataques de heróis e não pode reduzir dano de execução).\n\n[Reforço de Dano Mágico]: A unidade com este estado tem o dano mágico recebido +5%.\n\n[Cegueira]: A unidade com este estado tem precisão -10% por 2 turnos."
+        },
+        {
+            nome: "Androctasia",
+            classe: "Guerreiro",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "Sangramento, Quebra Armadura",
+            habilidades: [
+                { nome: "Corte Fatal", desc: "Aplica [Sangramento] e dano físico." },
+                { nome: "Instinto Guerreiro", desc: "Roubo de Vida +10%, CRÍT +5%." },
+                { nome: "Destruidora", desc: "Reduz a armadura do alvo significativamente." },
+                { nome: "Carnificina", desc: "Causa dano extra em alvos sangrando." }
+            ],
+            talentos: [
+                { nome: "Roubo de Vida Físico", desc: "Ao usar habilidades de dano físico, restaura a própria vida em 20% do valor do dano." },
+                { nome: "Penetração Básica", desc: "O resultado do dano ignora 10% da defesa do alvo." }
+            ],
+            observacoes: "Especialista em infligir sangramentos contínuos e quebrar defesas inimigas.",
+            subefeitos: "[Sangramento]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos; este efeito pode ser acumulado.\n\n[Selamento]: A unidade com este estado não pode causar acertos críticos, e habilidades passivas não são acionadas por 2 turnos.\n\n[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos."
+        },
+        {
+            nome: "Esfinge",
+            classe: "Tanque",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "Silêncio, Redução de Defesa",
+            habilidades: [
+                { nome: "Enigma Mortal", desc: "Aplica [Silêncio] no alvo principal." },
+                { nome: "Corpus Pétreo", desc: "Vida +25%, Redução de Dano +5%." },
+                { nome: "Barreira Frontal", desc: "Mitiga o dano recebido na linha da frente." },
+                { nome: "Olhar Severo", desc: "Reduz a defesa dos atacantes frontais." }
+            ],
+            talentos: [
+                { nome: "Imunidade a Dano Básico", desc: "No início da batalha, a redução de dano +10% nos primeiros 2 turnos." },
+                { nome: "Tenacidade Básica", desc: "Resistência a efeitos +4%." }
+            ],
+            observacoes: "Tanque disruptivo capaz de silenciar magos e suportes adversários.",
+            subefeitos: "[Silêncio]: A unidade com este estado não pode usar habilidades ativas por 1 turno."
+        },
+        {
+            nome: "Hécate",
+            classe: "Suporte",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "Cura Coletiva, Confusão",
+            habilidades: [
+                { nome: "Magia das Sombras", desc: "Causa confusão e desorienta o inimigo." },
+                { nome: "Sabedoria Oculta", desc: "Vida +20%, Resistência a Efeitos +10%." },
+                { nome: "Bênção Lunar", desc: "Cura em massa para toda a equipa." },
+                { nome: "Eco Noturno", desc: "Limpa debuffs leves dos aliados." }
+            ],
+            talentos: [
+                { nome: "Clareza Básica", desc: "Limpa estados negativos de um aliado ao curar." },
+                { nome: "Vitalidade Básica", desc: "A cura e a cura recebida do herói +5%." }
+            ],
+            observacoes: "Suporte utilitário com forte capacidade de mitigação e desorientação.",
+            subefeitos: "[Confusão]: A unidade com este estado, ao agir, usa um ataque básico para atacar unidades aliadas por 2 turnos.\n\n[Reforço de VEL]: A unidade com este estado tem a velocidade +3% por 1 turno.\n\n[Reforço de Esquiva]: A unidade com este estado tem a esquiva +5% por 1 turno."
+        },
+        {
+            nome: "Ares",
+            classe: "Guerreiro",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Dano Elevado, Alma de Fogo",
+            habilidades: [
+                { nome: "Espada da Guerra", desc: "Golpe físico maciço com acumulação de alma." },
+                { nome: "Fúria Belli", desc: "Ataque Físico +20%, Taxa CRÍT +10%." },
+                { nome: "Ira Divina", desc: "Dano devastador em linha reta." },
+                { nome: "Espírito de Ares", desc: "Aumenta o ataque progressivamente em combate." }
+            ],
+            talentos: [
+                { nome: "Bravura B", desc: "No início da batalha, dano físico +10% por 2 turnos." },
+                { nome: "Poder Básico", desc: "Dano físico +5%; ataque adicional +60 pontos." }
+            ],
+            observacoes: "Guerreiro focado em acumular bônus ofensivos e destruir linhas frontais.",
+            subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos.\n\n[Despertar da Alma Flamejante]: Aumenta o próprio ataque em 2% e o dano critico em 2%, até 10 camadas; não pode ser dissipado; dura até o fim da batalha."
+        },
+        {
+            nome: "Atena",
+            classe: "Tanque",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Proteção de Espelho, Armadura",
+            habilidades: [
+                { nome: "Escudo Égide", desc: "Protege os aliados e reflete dano físico." },
+                { nome: "Fortitude", desc: "Defesa +25%, Vida +15%." },
+                { nome: "Lança da Justiça", desc: "Aplica quebra de armadura no alvo." },
+                { nome: "Proteção Divina", desc: "Reduz o dano crítico sofrido pela equipa." }
+            ],
+            talentos: [
+                { nome: "Guarda Básica", desc: "Confere a toda a equipe um escudo equivalente a 4% da própria vida por 2 turnos." },
+                { nome: "RES CRÍT Básico", desc: "Chance de sofrer acerto crítico -5%." }
+            ],
+            observacoes: "Tanque de linha frontal supremo com foco em reflexão de dano e proteção de equipa.",
+            subefeitos: "[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos.\n\n[Reflexão Completa]: 20% de chance de refletir 20% do dano por 2 turnos.\n\n[Imagem Espelhada Distorcida]: Marca de dano especial; detona ao sofrer dano critico de herói, após a detonação, cada camada de marca causa dano equivalente a 4% da vida do conjurador, até 10 camadas e não pode ser dissipada; dura até ao fim da batalha."
+        },
+        {
+            nome: "Hades",
+            classe: "Mago",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Detonação de Maldição",
+            habilidades: [
+                { nome: "Toque do Submundo", desc: "Aplica [Maldição] prolongada aos inimigos." },
+                { nome: "Poder Sombrio", desc: "Poder Mágico +20%, Velocidade +5." },
+                { nome: "Cataclisma", desc: "Detona instantaneamente todas as maldições ativas." },
+                { nome: "Senhor das Sombras", desc: "Rouba energia mágica ao eliminar inimigos." }
+            ],
+            talentos: [
+                { nome: "Foco B", desc: "No início da batalha, o dano mágico +10% por 2 turnos." },
+                { nome: "Murchar Básico", desc: "Dano causado a alvos com Vitalidade/Autocura +15%." }
+            ],
+            observacoes: "Mago de controlos e detonações progressivas de maldições.",
+            subefeitos: "[Maldição]: A unidade com este estado sofre, após 2 turnos, dano equivalente a (30% do ataque do conjurador); este efeito pode ser acumulado.\n\n[Atordoamento]: A unidade com este estado não pode agir por 2 turnos."
+        },
+        {
+            nome: "Tanatos",
+            classe: "Guerreiro",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Perseguições, Roubo de Vida",
+            habilidades: [
+                { nome: "Foice da Morte", desc: "Ataque cortante com alto roubo de vida." },
+                { nome: "Sede de Sangue", desc: "Taxa CRÍT +15%, Roubo de Vida +10%." },
+                { nome: "Execução", desc: "Persegue alvos com vida baixa." },
+                { nome: "Deus Demônio", desc: "Bônus permanente de crítico e dano crítico." }
+            ],
+            talentos: [
+                { nome: "Perseguição Básico", desc: "Ataque extra ao abater com dano físico." },
+                { nome: "Fúria Básica", desc: "Taxa de acerto crítico +10%." }
+            ],
+            observacoes: "Ceifador focado em abates rápidos em alvos fragilizados.",
+            subefeitos: "[Sangramento]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos; este efeito pode ser acumulado.\n\n[Quebra de Armadura]: A unidade com este estado tem defesa -20% por 2 turnos.\n\n[Deus Demonio]: A unidade com este estado tem taxa de acerto critico +10%, dano critico +10%; não pode ser dissipada; dura até ao fim da batalha."
+        },
+        {
+            nome: "Medela",
+            classe: "Suporte",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Conversão de Dano, Cura em Massa",
+            habilidades: [
+                { nome: "Cura Sombria", desc: "Converte parte do dano sofrido em cura." },
+                { nome: "Essência Vital", desc: "Vida +20%, Cura Recebida +10%." },
+                { nome: "Restituição", desc: "Cura coletiva baseada no ataque." },
+                { nome: "Aura Protetora", desc: "Mitiga danos mágicos na retaguarda." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "A cura e a cura recebida do herói +5%." },
+                { nome: "Clareza Básica", desc: "Limpeza de debuffs em aliados." }
+            ],
+            observacoes: "Suporte voltado à sustentação e mitigação de danos em área.",
+            subefeitos: "[Proibição de Cura]: A unidade com este estado não pode ser curada por 2 turnos."
+        },
+        {
+            nome: "Nereu",
+            classe: "Mago",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Contra-ataques Mágicos",
+            habilidades: [
+                { nome: "Maré Baixa", desc: "Causa dano mágico e reduz a velocidade do alvo." },
+                { nome: "Fluidez", desc: "Poder Mágico +20%, Esquiva +5%." },
+                { nome: "Retaliação das Águas", desc: "Contra-ataca com feitiços ao sofrer dano." },
+                { nome: "Correnteza", desc: "Aumenta a eficácia dos feitiços de água." }
+            ],
+            talentos: [
+                { nome: "Gelo Básico", desc: "Reduz a velocidade do alvo ao atacar." },
+                { nome: "Foco B", desc: "Aumento de dano mágico inicial." }
+            ],
+            observacoes: "Controlador focado em lentidão e retaliações mágicas constantes.",
+            subefeitos: "[Retaliação de Magia]: A unidade com este estado, sempre que lança um ataque mágico, sofre dano equivalente a [Ataque do conjurador x 20%]."
+        },
+        {
+            nome: "Tritão",
+            classe: "Guerreiro",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Envenenamento, Dano em Colunas",
+            habilidades: [
+                { nome: "Tridente Venenoso", desc: "Aplica [Veneno] e ataca em coluna." },
+                { nome: "Força Abissal", desc: "Ataque Físico +20%, Vida +10%." },
+                { nome: "Ondas Tóxicas", desc: "Dano contínuo em múltiplos alvos." },
+                { nome: "Bloqueio Profundo", desc: "Proíbe o alvo envenenado de reviver." }
+            ],
+            talentos: [
+                { nome: "Pesadelo Básico", desc: "Reduz a cura recebida pelo alvo." },
+                { nome: "Destruição Básica", desc: "Impossibilita revives do alvo abatido." }
+            ],
+            observacoes: "Aplica venenos severos e bloqueia recursos de revives oponentes.",
+            subefeitos: "[Veneno]: Perde vida equivalente a [5% do limite máximo de vida] a cada turno; o máximo não excede 10 vezes o ataque; por 1 turno.\n\n[Bloqueio de Reviver]: A unidade com este estado não pode reviver por 2 turnos."
+        },
+        {
+            nome: "Onan",
+            classe: "Tanque",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Proteção, Proibição de Reviver",
+            habilidades: [
+                { nome: "Muro Oceânico", desc: "Cria escudos defensores robustos." },
+                { nome: "Resistência Marinha", desc: "Defesa +20%, Vida +20%." },
+                { nome: "Selo das Profundezas", desc: "Imíde o inimigo abatido de ressuscitar." },
+                { nome: "Bastião", desc: "Reduz o dano físico global recebido." }
+            ],
+            talentos: [
+                { nome: "Guarda Básica", desc: "Gera escudos para a equipa no turno inicial." },
+                { nome: "Destruição Básica", desc: "Bloqueia efeitos de ressurreição." }
+            ],
+            observacoes: "Tanque robusto com foco em neutralizar ressurreições no campo de batalha.",
+            subefeitos: "[Bloqueio de Reviver]: A unidade com este estado não pode reviver por 2 turnos."
+        },
+        {
+            nome: "Ceneu",
+            classe: "Tanque",
+            elemento: "Maré",
+            nucleo: "Sim",
+            etiquetas: "Contra-ataques Rápidos",
+            habilidades: [
+                { nome: "Investida Rápida", desc: "Golpe frontal rápido com aumento de velocidade." },
+                { nome: "Agilidade Táctica", desc: "Velocidade +20, Defesa +10%." },
+                { nome: "Contra-golpe", desc: "Responde rapidamente a investidas inimigas." },
+                { nome: "Impenetrável", desc: "Aumenta a defesa progressivamente." }
+            ],
+            talentos: [
+                { nome: "Vendaval Básico", desc: "Aumento de velocidade base." },
+                { nome: "Imunidade a Dano Básico", desc: "Redução de dano nos primeiros turnos." }
+            ],
+            observacoes: "Tanque ágil focado em absorção e contra-respostas velozes.",
+            subefeitos: "[Reforço de VEL]: A unidade com este estado tem a velocidade +2%, até 5 camadas; dura até o fim da batalha e não pode ser dissipado.\n\n[Atordoamento]: A unidade com este estado não pode agir por 1 turno."
+        },
+        {
+            nome: "Perseu",
+            classe: "Guerreiro",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Impacto Físico, Atordoamento",
+            habilidades: [
+                { nome: "Golpe de Escudo", desc: "Ataca o alvo com chance de atordoamento." },
+                { nome: "Heroísmo", desc: "Ataque Físico +20%, CRÍT +10%." },
+                { nome: "Espada da Medusa", desc: "Dano físico pesado com efeito de controlo." },
+                { nome: "Olhar Valente", desc: "Resistência a atordoamentos e abates." }
+            ],
+            talentos: [
+                { nome: "Impacto Básico", desc: "Chance de atordoar alvos ao causar alto dano." },
+                { nome: "Bravura B", desc: "Aumento de dano físico inicial." }
+            ],
+            observacoes: "Guerreiro com forte capacidade de atordoamento e controle físico.",
+            subefeitos: "[Atordoamento]: A unidade com este estado não pode agir por 2 turnos."
+        },
+        {
+            nome: "Anfitrião",
+            classe: "Tanque",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Queimadura em Área, Auto-cura",
+            habilidades: [
+                { nome: "Chama Protetora", desc: "Causa queimaduras e cura-se a si mesmo." },
+                { nome: "Vitalidade Ignea", desc: "Vida Máxima +25%, Defesa +10%." },
+                { nome: "Calor Bruto", desc: "Dano de fogo contínuo em área." },
+                { nome: "Regeneração de Brasas", desc: "Restaura PV ao infligir queimaduras." }
+            ],
+            talentos: [
+                { nome: "Autocura Básica", desc: "Restaura PV no início de cada turno." },
+                { nome: "Murchar Básico", desc: "Bônus de dano contra alvos com autocura." }
+            ],
+            observacoes: "Tanque sustentável através de queimas contínuas e autocura.",
+            subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado).\n\n[Queimadura Ardente]: A unidade com este estado perde vida equivalente a [Limite máximo de vida do conjurador x 7%] por turno; dura 1 turno."
+        },
+        {
+            nome: "Hiperion",
+            classe: "Mago",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Híbrido Fogo/Gelo, Conversão PV",
+            habilidades: [
+                { nome: "Clarão Térmico", desc: "Ataque mágico que converte vida em dano." },
+                { nome: "Poder Estelar", desc: "Poder Mágico +20%, Vida +10%." },
+                { nome: "Fogo Primordial", desc: "Dano mágico explosivo elementar." },
+                { nome: "Equilíbrio Cósmico", desc: "Redução de dano elementar recebido." }
+            ],
+            talentos: [
+                { nome: "Rubro Básico", desc: "Dano aumenta conforme a perda de vida." },
+                { nome: "Foco B", desc: "Bônus de poder mágico no início." }
+            ],
+            observacoes: "Mago de dano elemental destrutivo baseado em escalas de PV.",
+            subefeitos: "[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado).\n\n[Queimadura Ardente]: A unidade com este estado perde vida equivalente a [Limite máximo de vida do conjurador x 7%] por turno; dura 1 turno.\n\n[Reforço de Imunidade a Dano]: A unidade com este estado tem a redução de dano +20% por 2 turnos."
+        },
+        {
+            nome: "Clábis",
+            classe: "Suporte",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Roubo de Ataque, Controlo",
+            habilidades: [
+                { nome: "Roubo Ígneo", desc: "Rouba o ataque do inimigo e transfere para si." },
+                { nome: "Astúcia", desc: "Velocidade +15, Precisão +10%." },
+                { nome: "Silêncio Flamejante", desc: "Silencia e confunde alvos de suporte." },
+                { nome: "Chama Oculta", desc: "Aumenta a própria evasão após roubar stats." }
+            ],
+            talentos: [
+                { nome: "Dissipar Básico", desc: "Chance de remover buffs oponentes ao atacar." },
+                { nome: "Precisão Básica", desc: "Aumento de precisão de efeitos." }
+            ],
+            observacoes: "Suporte disruptivo capaz de enfraquecer o oponente roubando atributos.",
+            subefeitos: "[Roubo de ATQ]: Rouba o ataque do inimigo: o ataque da unidade inimiga -10%, e o ataque roubado é transferido para si mesmo por 2 turnos não pode ser dissipado.\n\n[Queimadura]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 15%] a cada turno por 2 turnos (pode ser acumulado).\n\n[Queimadura Ardente]: A unidade com este estado perde vida equivalente a [Limite máximo de vida do conjurador x 7%] por turno; dura 1 turno.\n\n[Silêncio]: A unidade com este estado não pode usar habilidades ativas por 2 turnos.\n\n[Confusão]: A unidade com este estado não consegue distinguir amigos de inimigos e ataca aleatoriamente qualquer alvo no campo com um ataque básico por 2 turnos."
+        },
+        {
+            nome: "Minos",
+            classe: "Guerreiro",
+            elemento: "Vendaval",
+            nucleo: "Sim",
+            etiquetas: "Eletrização, Quebra de Armadura",
+            habilidades: [
+                { nome: "Julgamento do Labirinto", desc: "Eletriza e quebra a armadura do alvo." },
+                { nome: "Força do Touro", desc: "Ataque Físico +20%, Defesa +10%." },
+                { nome: "Carga Elétrica", desc: "Dano múltiplo com eletrização em cadeia." },
+                { nome: "Espírito Sagrado do Labirinto", desc: "Capacidade de renascer em forma de alma." }
+            ],
+            talentos: [
+                { nome: "Penetração Básica", desc: "Ignora parte da defesa oponente." },
+                { nome: "Espirito Sagrado Básico", desc: "Chance de reviver após ser derrotado." }
+            ],
+            observacoes: "Guerreiro resistente com propriedades de quebra de defesa e revives estratégicos.",
+            subefeitos: "[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos.\n\n[Espírito Sagrado]: A unidade com este estado aparece no campo de batalha em forma de alma; no próximo turno, tem 25% de chance de reviver; a cada turno, a chance aumenta em 5%; após 5 turnos da morte, revive com certeza, recuperando 40% da vida."
+        },
+        {
+            nome: "Ilitia",
+            classe: "Mago",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Suporte, Dano Radiante",
+            habilidades: [
+                { nome: "Luz de Alívio", desc: "Causa dano radiante inicial e apoia aliados." },
+                { nome: "Pureza Radiante", desc: "Poder Mágico +20%, Vida +10%." },
+                { nome: "Clarão Divino", desc: "Dano mágico puro em área." },
+                { nome: "Bênção da Luz", desc: "Aumenta a resistência mágica da equipa." }
+            ],
+            talentos: [
+                { nome: "Clareza Básica", desc: "Limpeza de estados negativos." },
+                { nome: "Foco B", desc: "Poder mágico aumentado no início." }
+            ],
+            observacoes: "Maga de suporte com foco em purificações e sinergias de luz.",
+            subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos."
+        },
+        {
+            nome: "Sarpedon",
+            classe: "Guerreiro",
+            elemento: "Chama",
+            nucleo: "Sim",
+            etiquetas: "Abates em Cadeia, Marca Demoníaca",
+            habilidades: [
+                { nome: "Lâmina Demoníaca", desc: "Aplica [Marca Demoníaca] e causa dano físico." },
+                { nome: "Fúria Sanguinária", desc: "Taxa CRÍT +15%, Dano CRÍT +10%." },
+                { nome: "Ceifeiro de Almas", desc: "Abates em cadeia ao eliminar marcados." },
+                { nome: "Redução Demoníaca", desc: "Reduz o dano físico recebido dos alvos marcados." }
+            ],
+            talentos: [
+                { nome: "Perseguição Básico", desc: "Ataque extra após abates." },
+                { nome: "Fúria Básica", desc: "Aumento de taxa crítica." }
+            ],
+            observacoes: "Especialista em infligir marcas e executar alvos em cadeia.",
+            subefeitos: "[Marca Demoníaca]: A unidade com este estado tem a redução de dano físico -20%."
+        },
+        {
+            nome: "Leto",
+            classe: "Suporte",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Cura Coletiva, Suporte Estratégico",
+            habilidades: [
+                { nome: "Graça Maternal", desc: "Cura coletiva e quebra de armadura básica." },
+                { nome: "Vitalidade Serena", desc: "Vida +20%, Cura +10%." },
+                { nome: "Luz Protetora", desc: "Cria escudos de luz para os aliados fragilizados." },
+                { nome: "Consolo Divino", desc: "Limpa estados negativos ao curar." }
+            ],
+            talentos: [
+                { nome: "Vitalidade Básica", desc: "Aumento de eficácia de cura." },
+                { nome: "Clareza Básica", desc: "Purificação de debuffs em aliados." }
+            ],
+            observacoes: "Suporte focado em curas massivas e remoção de debuffs.",
+            subefeitos: "[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos."
+        },
+        {
+            nome: "Empusa",
+            classe: "Mago",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Maldições, Dissipação de Buffs",
+            habilidades: [
+                { nome: "Toque Espectral", desc: "Aplica maldições e dissipa buffs inimigos." },
+                { nome: "Sombra Profunda", desc: "Poder Mágico +20%, Precisão +10%." },
+                { nome: "Cordão do Destino", desc: "Liga alvos aumentando o dano sofrido por eles." },
+                { nome: "Vampirismo Mágico", desc: "Restaura vida com base no dano de maldição." }
+            ],
+            talentos: [
+                { nome: "Dissipar Básico", desc: "Remove bónus positivos dos oponentes." },
+                { nome: "Foco B", desc: "Bônus de dano mágico inicial." }
+            ],
+            observacoes: "Maga de disrupção focada em dissipar bónus e aplicar maldições.",
+            subefeitos: "[Cordão do Destino]: As unidades ligadas pela Corda do Destino têm a dano sofrido +10% e a cura recebida -10% por 2 turnos não pode ser dissipado.\n\n[Maldição]: A unidade com este estado sofre, após 2 turnos, dano equivalente a (30% do ataque do conjurador); este efeito pode ser acumulado."
+        },
+        {
+            nome: "Makhai",
+            classe: "Tanque",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Provocação, Escudos Protetores",
+            habilidades: [
+                { nome: "Grito de Guerra", desc: "Provoca os inimigos e ganha escudos." },
+                { nome: "Armadura Sombria", desc: "Defesa +25%, Vida +15%." },
+                { nome: "Bastião das Sombras", desc: "Absorve danos direcionados à equipa." },
+                { nome: "Resiliência", desc: "Aumenta a resistência a controlos sob efeito de provocação." }
+            ],
+            talentos: [
+                { nome: "Provocação Básica", desc: "Chance de forçar ataque básico inimigo." },
+                { nome: "Imunidade a Dano Básico", desc: "Mitigação de dano inicial." }
+            ],
+            observacoes: "Tanque focado em absorção de dano e controle por provocação.",
+            subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos.\n\n[Provocação]: A unidade com este estado é forçada a usar ataque básico contra o provocador por 2 turnos."
+        },
+        {
+            nome: "As Horas",
+            classe: "Suporte",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Sangramento, Silêncio, Alvo Único",
+            habilidades: [
+                { nome: "Tempo Esgotado", desc: "Aplica sangramento e silêncio no maior atacante inimigo." },
+                { nome: "Velocidade Temporal", desc: "Velocidade +20, Ataque +10%." },
+                { nome: "Corte do Destino", desc: "Dano massivo direcionado a um único alvo." },
+                { nome: "Aceleração", desc: "Concede bónus de velocidade aos aliados mais rápidos." }
+            ],
+            talentos: [
+                { nome: "Vendaval Básico", desc: "Aumento de velocidade." },
+                { nome: "Pesadelo Básico", desc: "Redução de cura oponente." }
+            ],
+            observacoes: "Controladora tática focada em velocidade e neutralização de alvos-chave.",
+            subefeitos: "[Sangramento]: A unidade com este estado perde vida equivalente a [Ataque do conjurador x 10%] por turno; dura 2 turnos; este efeito pode ser acumulado.\n\n[Silêncio]: A unidade com este estado não pode usar habilidades ativas por 2 turnos.\n\n[Provocação]: A unidade com este estado é forçada a usar ataque básico contra o provocador por 2 turnos."
+        },
+        {
+            nome: "Zeus",
+            classe: "Guerreiro",
+            elemento: "Radiância",
+            nucleo: "Sim",
+            etiquetas: "Golpes Estrondosos, Dano Massivo",
+            habilidades: [
+                { nome: "Raio Divino", desc: "Golpe estrondoso de dano massivo num único alvo." },
+                { nome: "Poder dos Céus", desc: "Ataque Físico +25%, Taxa CRÍT +15%." },
+                { nome: "Fúria do Olimpo", desc: "Tempestade de raios em área com dano crítico elevado." },
+                { nome: "Majestade Divina", desc: "Imunidade temporária a efeitos de controlo no início da batalha." }
+            ],
+            talentos: [
+                { nome: "Fúria Básica", desc: "Taxa de acerto crítico aumentada." },
+                { nome: "Penetração Básica", desc: "Ignora parte da armadura do alvo." }
+            ],
+            observacoes: "Lançador de danos críticos avassaladores com foco em eletricidade e impacto divino.",
+            subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos."
+        },
+        {
+            nome: "Caronte",
+            classe: "Guerreiro",
+            elemento: "Sombra",
+            nucleo: "Sim",
+            etiquetas: "Infeção por Maldição, Detonações",
+            habilidades: [
+                { nome: "Remessa ao Além", desc: "Infeta o alvo com maldições progressivas." },
+                { nome: "Sombra Eterna", desc: "Ataque Físico +20%, Vida +10%." },
+                { nome: "Barco dos Mortos", desc: "Detona maldições acumuladas em massa." },
+                { nome: "Guia das Almas", desc: "Rouba bónus de ataque ao abater inimigos infetados." }
+            ],
+            talentos: [
+                { nome: "Pesadelo Básico", desc: "Redução de eficácia de cura no alvo." },
+                { nome: "Fúria Básica", desc: "Aumento de crítico para detonações." }
+            ],
+            observacoes: "Guerreiro focado em acumular e detonar maldições em oponentes.",
+            subefeitos: "[Maldição]: A unidade com este estado sofre, após 2 turnos, dano equivalente a (30% do ataque do conjurador); este efeito pode ser acumulado."
+        }
+    ];
+
+    function normalizarTexto(texto) {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    function buscarHerois() {
+        const termoBruto = document.getElementById("inputBusca").value.trim();
+        const termo = normalizarTexto(termoBruto);
+        const listaSugestoes = document.getElementById("listaSugestoes");
+        
+        listaSugestoes.innerHTML = "";
+        
+        if (termo === "") {
+            listaSugestoes.style.display = "none";
+            return;
+        }
+
+        const resultados = baseDadosHerois.filter(h => normalizarTexto(h.nome).includes(termo));
+
+        if (resultados.length > 0) {
+            listaSugestoes.style.display = "block";
+            resultados.forEach(heroi => {
+                const item = document.createElement("div");
+                item.className = "suggestion-item";
+                item.textContent = `${heroi.nome} (${heroi.classe} - ${heroi.elemento})`;
+                item.onclick = () => selecionarHeroi(heroi);
+                listaSugestoes.appendChild(item);
+            });
+        } else {
+            listaSugestoes.style.display = "none";
+        }
+    }
+
+    function selecionarHeroi(heroi) {
+        document.getElementById("listaSugestoes").style.display = "none";
+        document.getElementById("inputBusca").value = heroi.nome;
+
+        document.getElementById("msgInicial").style.display = "none";
+        document.getElementById("dossieHeroi").style.display = "block";
+
+        const imgEl = document.getElementById("imagemHeroi");
+        if (heroi.imagem) {
+            imgEl.src = heroi.imagem;
+            imgEl.style.display = "block";
+        } else {
+            imgEl.style.display = "none";
+        }
+
+        document.getElementById("nomeHeroi").textContent = heroi.nome;
+        document.getElementById("classeHeroi").textContent = heroi.classe;
+        document.getElementById("elementoHeroi").textContent = heroi.elemento;
+        document.getElementById("nucleoHeroi").textContent = `Núcleo: ${heroi.nucleo}`;
+        document.getElementById("etiquetasHeroi").innerHTML = `<strong>Etiquetas:</strong> ${heroi.etiquetas}`;
+
+        for (let i = 0; i < 4; i++) {
+            document.getElementById(`hab${i+1}Nome`).textContent = heroi.habilidades[i].nome;
+            document.getElementById(`hab${i+1}Desc`).textContent = heroi.habilidades[i].desc;
+        }
+
+        document.getElementById("talento1Nome").textContent = heroi.talentos[0].nome;
+        document.getElementById("talento1Desc").textContent = heroi.talentos[0].desc;
+        document.getElementById("talento2Nome").textContent = heroi.talentos[1].nome;
+        document.getElementById("talento2Desc").textContent = heroi.talentos[1].desc;
+
+        document.getElementById("obsHeroi").textContent = heroi.observacoes;
+        document.getElementById("subefeitosHeroi").textContent = heroi.subefeitos;
+    }
+</script>
+
+</body>
+</html>
