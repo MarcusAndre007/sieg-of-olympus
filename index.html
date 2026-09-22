@@ -1034,20 +1034,28 @@
         }
     }
 
-    function selecionarHeroi(heroi) {
-        document.getElementById("listaSugestoes").style.display = "none";
-        document.getElementById("inputBusca").value = heroi.nome;
+   function selecionarHeroi(heroi) {
+    document.getElementById("listaSugestoes").style.display = "none";
+    document.getElementById("inputBusca").value = heroi.nome;
 
-        document.getElementById("msgInicial").style.display = "none";
-        document.getElementById("dossieHeroi").style.display = "block";
+    document.getElementById("msgInicial").style.display = "none";
+    document.getElementById("dossieHeroi").style.display = "block";
 
-        const imgEl = document.getElementById("imagemHeroi");
-        if (heroi.imagem) {
-            imgEl.src = heroi.imagem;
-            imgEl.style.display = "block";
-        } else {
-            imgEl.style.display = "none";
-        }
+    const imgEl = document.getElementById("imagemHeroi");
+    if (heroi.nome) {
+        // Transforma o nome do herói num formato limpo para o ficheiro (ex: "Tétis" vira "tetis")
+        const nomeArquivo = heroi.nome
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+            .replace(/\s+/g, "");            // Remove espaços se houver
+
+        imgEl.src = `${nomeArquivo}.png`;
+        imgEl.style.display = "block";
+    } else {
+        imgEl.style.display = "none";
+    }
+}
 
         document.getElementById("nomeHeroi").textContent = heroi.nome;
         document.getElementById("classeHeroi").textContent = heroi.classe;
