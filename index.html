@@ -117,11 +117,11 @@
         }
 
         .hero-avatar {
-            width: auto;          /* Adapta-se à proporção real de largura */
-            height: auto;         /* Adapta-se à proporção real de altura */
-            max-height: 100px;    /* Altura máxima para preservar o layout */
-            max-width: 150px;     /* Largura máxima de segurança */
-            object-fit: contain;  /* Mantém a imagem inteira sem cortes */
+            width: auto;          
+            height: auto;         
+            max-height: 100px;    
+            max-width: 150px;     
+            object-fit: contain;  
             border-radius: 6px;
             border: 1px solid #dcdde1;
             display: none;
@@ -378,7 +378,6 @@
             elemento: "Maré",
             nucleo: "Sim",
             etiquetas: "Dano em Área, Congel., Esc",
-            imagem: "image_96e7c2.png",
             habilidades: [
                 { nome: "Mundo de Neve", desc: "Causa 98% de dano mágico a todas as unidades inimigas; contra alvos com vida superior a 60%, o dano +20%; ao mesmo tempo, tem 40% de chance de reduzir a taxa de acerto crítico do alvo em 10% por 2 turnos." },
                 { nome: "Sabedoria Mágica", desc: "Ataque +20%, Vida +10%, Velocidade +5." },
@@ -1034,28 +1033,12 @@
         }
     }
 
-   function selecionarHeroi(heroi) {
-    document.getElementById("listaSugestoes").style.display = "none";
-    document.getElementById("inputBusca").value = heroi.nome;
+    function selecionarHeroi(heroi) {
+        document.getElementById("listaSugestoes").style.display = "none";
+        document.getElementById("inputBusca").value = heroi.nome;
 
-    document.getElementById("msgInicial").style.display = "none";
-    document.getElementById("dossieHeroi").style.display = "block";
-
-    const imgEl = document.getElementById("imagemHeroi");
-    if (heroi.nome) {
-        // Transforma o nome do herói num formato limpo para o ficheiro (ex: "Tétis" vira "tetis")
-        const nomeArquivo = heroi.nome
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "") // Remove acentos
-            .replace(/\s+/g, "");            // Remove espaços se houver
-
-        imgEl.src = `${nomeArquivo}.png`;
-        imgEl.style.display = "block";
-    } else {
-        imgEl.style.display = "none";
-    }
-}
+        document.getElementById("msgInicial").style.display = "none";
+        document.getElementById("dossieHeroi").style.display = "block";
 
         document.getElementById("nomeHeroi").textContent = heroi.nome;
         document.getElementById("classeHeroi").textContent = heroi.classe;
@@ -1075,6 +1058,21 @@
 
         document.getElementById("obsHeroi").textContent = heroi.observacoes;
         document.getElementById("subefeitosHeroi").textContent = heroi.subefeitos;
+
+        // Automatização da imagem do herói pelo nome
+        const imgEl = document.getElementById("imagemHeroi");
+        if (heroi.nome) {
+            const nomeArquivo = heroi.nome
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+                .replace(/\s+/g, "");            // Remove espaços
+
+            imgEl.src = `${nomeArquivo}.png`;
+            imgEl.style.display = "block";
+        } else {
+            imgEl.style.display = "none";
+        }
     }
 </script>
 
