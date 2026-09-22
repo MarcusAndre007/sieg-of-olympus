@@ -616,7 +616,7 @@
                 { nome: "Guarda Básica", desc: "Confere a toda a equipe um escudo equivalente a 4% da própria vida por 2 turnos." },
                 { nome: "RES CRÍT Básico", desc: "Chance de sofrer acerto crítico -5%." }
             ],
-            observacoes: "Tanque de linha frontal supremo com foco em reflexão de dano e proteção de equipa.",
+            observacoes: "Tanque de linha frontal supremo com foco em reflexão de dano e proteção de equipe.",
             subefeitos: "[Quebra de Armadura]: A unidade com este estado tem defesa -30% por 2 turnos.\n\n[Reflexão Completa]: 20% de chance de refletir 20% do dano por 2 turnos.\n\n[Imagem Espelhada Distorcida]: Marca de dano especial; detona ao sofrer dano critico de herói, após a detonação, cada camada de marca causa dano equivalente a 4% da vida do conjurador, até 10 camadas e não pode ser dissipada; dura até ao fim da batalha."
         },
         {
@@ -639,11 +639,11 @@
             subefeitos: "[Maldição]: A unidade com este estado sofre, após 2 turnos, dano equivalente a (30% do ataque do conjurador); este efeito pode ser acumulado.\n\n[Atordoamento]: A unidade com este estado não pode agir por 2 turnos."
         },
         {
-            nome: "Tanatos",
+            nome: "Tânatos",
             classe: "Guerreiro",
             elemento: "Sombra",
             nucleo: "Sim",
-            etiquetas: "Perseguições, Roubo de Vida",
+            etiquetas: "Perseguição, Roubo de Vida",
             habilidades: [
                 { nome: "Foice da Morte", desc: "Ataque cortante com alto roubo de vida." },
                 { nome: "Sede de Sangue", desc: "Taxa CRÍT +15%, Roubo de Vida +10%." },
@@ -715,23 +715,23 @@
             subefeitos: "[Veneno]: Perde vida equivalente a [5% do limite máximo de vida] a cada turno; o máximo não excede 10 vezes o ataque; por 1 turno.\n\n[Bloqueio de Reviver]: A unidade com este estado não pode reviver por 2 turnos."
         },
         {
-            nome: "Orion",
-            classe: "Guerreiro",
-            elemento: "Vendaval",
+            nome: "Órion",
+            classe: "Tanque",
+            elemento: "Maré",
             nucleo: "Sim",
-            etiquetas: "Precisão Estelar, Ataque à Distância",
+            etiquetas: "Aux Prot, Cont Atq",
             habilidades: [
-                { nome: "Flecha Celeste", desc: "Dispara um projétil estelar de alta precisão causando dano físico severo." },
-                { nome: "Mira Constelar", desc: "Precisão +15%, Taxa CRÍT +10%." },
-                { nome: "Chuva de Meteoros", desc: "Bombardeia a área inimiga causando dano contínuo." },
-                { nome: "Olhar do Caçador", desc: "Aumenta o dano contra alvos marcados." }
+                { nome: "Lâmina das Águas Silenciosas", desc: "Causa 186% de dano físico a um único inimigo, com 50% de chance de aplicar o estado [Congelamento]. Também aplica o estado [Redução de Dano] a si mesmo." },
+                { nome: "Constelação de Órion", desc: "Defesa aumentada em 20%, vida aumentada em 10%, redução de dano aumentada em 5%." },
+                { nome: "Bênção Estelar", desc: "Causa 88% de dano físico a todas as unidades inimigas, com 30% de chance de aplicar [Lentidão]. Também aplica o estado [Aumento de Resistência a Crítico] a si mesmo." },
+                { nome: "Grande Arco Estilhaça-Estrelas", desc: "Após o início da batalha, aplica o estado [Aumento de Defesa] a si mesmo, durando até o fim da batalha." }
             ],
             talentos: [
-                { nome: "Precisão Básica", desc: "Aumento de precisão de ataque físico." },
-                { nome: "Fúria Básica", desc: "Taxa de acerto crítico +10%." }
+                { nome: "Guarda Básica", desc: "Gera escudos ou aumenta a mitigação defensiva inicial do tanque." },
+                { nome: "Tenacidade Básica", desc: "Resistência a efeitos e controlo aumentada." }
             ],
-            observacoes: "Caçador estelar focado em ataques precisos e dano explosivo à distância.",
-            subefeitos: "[Marca do Caçador]: A unidade com este estado tem a esquiva reduzida em 10% por 2 turnos."
+            observacoes: "Tanque de Maré focado em proteção pessoal, controlo de congelamento e lentidão, com aumentos permanentes de defesa.",
+            subefeitos: "[Congelamento]: A unidade com este estado não pode agir por 2 turnos; após sofrer 3 ataques, o estado é removido.\n\n[Redução de Dano]: A unidade com este estado reduz o dano sofrido.\n\n[Lentidão]: Reduz a velocidade da unidade alvo.\n\n[Aumento de Resistência a Crítico]: Aumenta a resistência contra acertos críticos.\n\n[Aumento de Defesa]: Aumenta a defesa da unidade de forma permanente até ao fim da batalha."
         },
         {
             nome: "Ceneu",
@@ -886,7 +886,7 @@
             subefeitos: "[Eletrificado]: A unidade com este estado, ao sofrer 1 ataque, perde extra vida equivalente a [Ataque do conjurador x 15%]; dura 3 turnos."
         },
         {
-            nome: "Saroédon",
+            nome: "Sarpédon",
             classe: "Guerreiro",
             elemento: "Chama",
             nucleo: "Sim",
